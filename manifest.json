@@ -1,0 +1,252 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ContextBridge — AI Chat Exporter & Switcher",
+  "version": "2.0.1",
+  "description": "Export AI chats and continue them on any platform. Bridge your context across AI assistants instantly. No account needed.",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self'; img-src 'self' data: https:"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "popup.js",
+        "panel.html",
+        "panel.js",
+        "pdf_preview.html",
+        "pdf_preview.js",
+        "parsers/folderIndex.js",
+        "parsers/semanticSearch.js",
+        "icons/*",
+        "icons/platforms/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "parsers/inject_core.js"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/chatgpt.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://claude.ai/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/claude.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/gemini.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://grok.com/*",
+        "https://x.com/i/grok*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/grok.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://chat.deepseek.com/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/deepseek.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/perplexity.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://copilot.microsoft.com/*",
+        "https://www.bing.com/chat*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/copilot.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://quark.cn/*",
+        "https://*.quark.cn/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/quark.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.doubao.com/*",
+        "https://doubao.com/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/doubao.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.postman.co/*",
+        "https://postman.co/*",
+        "https://*.postman.com/*",
+        "https://postman.com/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/postman.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://lmarena.ai/*",
+        "https://*.lmarena.ai/*",
+        "https://arena.ai/*",
+        "https://*.arena.ai/*",
+        "https://chat.lmsys.org/*",
+        "https://*.lmsys.org/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/lmarena.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://grok.com/*",
+        "https://x.com/i/grok*",
+        "https://chat.deepseek.com/*",
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://www.bing.com/chat*",
+        "https://quark.cn/*",
+        "https://www.doubao.com/*",
+        "https://doubao.com/*",
+        "https://*.postman.co/*",
+        "https://postman.co/*",
+        "https://*.postman.com/*",
+        "https://postman.com/*",
+        "https://lmarena.ai/*",
+        "https://*.lmarena.ai/*",
+        "https://arena.ai/*",
+        "https://*.arena.ai/*",
+        "https://chat.lmsys.org/*",
+        "https://*.lmsys.org/*"
+      ],
+      "js": [
+        "parsers/tokenReducer.js",
+        "parsers/_shared.js",
+        "parsers/universal.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
