@@ -1,0 +1,21 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and databases
+*.log
+*.sqlite
+
+# Temporary and build artifacts
+node_modules/
+dist/
+build/
+.cache/
+scratch/
+*.tmp
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+*.swp
